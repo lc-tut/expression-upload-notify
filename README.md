@@ -1,6 +1,21 @@
 # expression-upload-notify
 
-Google Apps ScriptプロジェクトをTypeScriptで開発するためのセットアップ
+Google Apps ScriptプロジェクトをTypeScript + esbuildで開発
+
+## 構成
+
+```
+expression-upload-notify/
+├── dist/              # ビルド出力先（GASにプッシュされる）
+│   ├── appsscript.json
+│   └── main.js
+├── src/               # TypeScriptソースコード
+│   ├── App.ts
+│   └── main.ts
+├── esbuild.js         # ビルド設定
+├── package.json
+└── tsconfig.json
+```
 
 ## セットアップ手順
 
@@ -19,35 +34,24 @@ npx clasp login
 3. プロジェクトの設定（⚙️アイコン）
 4. 「スクリプトID」をコピー
 
-または、新規にプロジェクトを作成する場合：
-```bash
-npx clasp create --type sheets --title "expression-upload-notify"
-```
-
-### 3. .clasp.jsonを作成
-
-既存プロジェクトの場合：
-```json
-{
-  "scriptId": "ここにスクリプトIDを入力",
-  "rootDir": "./src"
-}
-```
-
-### 4. プッシュ
-```bash
-npm run push
-```
-
 ## コマンド
 
-- `npm run push` - TypeScriptを自動変換してGASにプッシュ
-- `npm run pull` - GASからコードを取得
+- `npm run build` - TypeScriptをビルド（esbuildでバンドル＆ミニファイ）
+- `npm run push` - distフォルダの内容をGASにプッシュ
+- `npm run deploy` - ビルド→プッシュを一括実行
 - `npm run open` - ブラウザでGASエディタを開く
-- `npm run deploy` - デプロイ
 
 ## 開発フロー
 
-1. `src/main.ts`でTypeScriptコードを編集
-2. `npm run push`でGASに反映（claspが自動的にTSをJSに変換）
-3. スプレッドシートで動作確認
+1. `src/App.ts`や他のTSファイルでコードを編集
+2. `npm run deploy`でビルド＆GASに反映
+3. `npm run open`でGASエディタを開く
+4. GASエディタで`App`関数を実行して動作確認
+
+## 特徴
+
+- ✅ TypeScriptで型安全な開発
+- ✅ esbuildで複数ファイルを1つにバンドル
+- ✅ ミニファイで最適化
+- ✅ import/exportでファイル分割可能
+

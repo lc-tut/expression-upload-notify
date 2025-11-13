@@ -1,16 +1,17 @@
 {
     "compilerOptions": {
-        "lib": [
-            "ES2019"
-        ],
+        "lib": ["esnext"],
         "target": "ES2019",
-        "strict": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
         "esModuleInterop": true,
+        "experimentalDecorators": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitAny": true
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "*": ["src/*"]
+        }
     },
-    "include": [
-        "src/**/*.ts"
-    ]
+    "include": ["./src/**/*"]
 }
