@@ -1,16 +1,26 @@
-import esbuild from "esbuild";
-import { GasPlugin } from "esbuild-gas-plugin";
+import esbuild from 'esbuild';
+import { GasPlugin } from 'esbuild-gas-plugin';
+import { copyFileSync, mkdirSync } from 'fs';
+
+// distフォルダを作成（存在しない場合）
+mkdirSync('./dist', { recursive: true });
+
+// appsscript.jsonをコピー
+copyFileSync('./src/appsscript.json', './dist/appsscript.json');
 
 esbuild
     .build({
-        entryPoints: ["./src/main.ts"],
+        entryPoints: ['./src/main.ts'],
         bundle: true,
         minify: true,
-        outfile: "./dist/main.js",
+        outfile: './dist/main.js',
         plugins: [GasPlugin],
     })
-    .catch((error) => {
-        console.log('ビルドに失敗しました')
+    .then(() => {
+        console.log('✅ Build succeeded!');
+    })
+    .catch(error => {
+        console.log('❌ ビルドに失敗しました');
         console.error(error);
         process.exit(1);
     });
