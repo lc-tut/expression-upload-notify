@@ -1,14 +1,63 @@
-/**
- * メインのアプリケーション関数
- */
-export const App = () => {
-  console.log('App started!');
+import { getApplicationFromRow } from './application';
+import { sendDiscordNotification } from './discord';
 
+/**
+ * スプレッドシートに行が追加されたときのトリガー
+ */
+export const onEdit = (e: GoogleAppsScript.Events.SheetsOnEdit) => {
+  try {
+    const range = e.range;
+    const sheet = range.getSheet();
+    const row = range.getRow();
+
+    // ヘッダー行（1行目）は無視
+    if (row <= 1) {
+      return;
+    }
+
+    // 申請情報を取得
+    const application = getApplicationFromRow(sheet, row);
+
+    if (!application) {
+      Logger.log(`行${row}: 申請情報が不完全のため通知をスキップ`);
+      return;
+    }
+
+    // Discord通知を送信
+    sendDiscordNotification(application);
+    Logger.log(`行${row}: 通知送信完了`);
+  } catch (error) {
+    Logger.log(`エラー: ${error}`);
+    throw error;
+  }
+};
+
+/**
+ * テスト用: 手動で通知を送信
+ */
+export const testNotification = () => {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getActiveSheet();
 
-  Logger.log('スプレッドシート名: ' + ss.getName());
-  Logger.log('シート名: ' + sheet.getName());
+  // アクティブセルの行で通知テスト
+  const activeRow = sheet.getActiveCell().getRow();
 
-  SpreadsheetApp.getUi().alert('接続成功！');
+  if (activeRow <= 1) {
+    SpreadsheetApp.getUi().alert('データ行（2行目以降）を選択してください');
+    return;
+  }
+
+  const application = getApplicationFromRow(sheet, activeRow);
+
+  if (!application) {
+    SpreadsheetApp.getUi().alert('申請情報が取得できませんでした');
+    return;
+  }
+
+  try {
+    sendDiscordNotification(application);
+    SpreadsheetApp.getUi().alert('通知送信成功！Discordを確認してください。');
+  } catch (error) {
+    SpreadsheetApp.getUi().alert(`エラー: ${error}`);
+  }
 };
