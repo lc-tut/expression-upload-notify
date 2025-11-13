@@ -17,7 +17,11 @@ export function sendDiscordNotification(application: Application): void {
   const config = getConfig();
 
   // メッセージ内容を構築
-  const message = createNotificationMessage(config.DISCORD_MENTION_ID, application);
+  const message = createNotificationMessage(
+    config.DISCORD_MENTION_ID,
+    config.APPLICATION_FORM_URL,
+    application
+  );
 
   const payload: DiscordWebhookPayload = {
     content: message,
@@ -49,12 +53,18 @@ export function sendDiscordNotification(application: Application): void {
 /**
  * 通知メッセージを作成
  */
-function createNotificationMessage(mentionId: string, application: Application): string {
+function createNotificationMessage(
+  mentionId: string,
+  formUrl: string,
+  application: Application
+): string {
   return `<@${mentionId}>
 
 📝 **新しいエクスプレッション申請が追加されました**
 
 **申請種類:** ${application.applicationType}
-**申請者　:** ${application.applicantName}
-**行番号　:** ${application.rowNumber}`;
+**申請者:** ${application.applicantName}
+**行番号:** ${application.rowNumber}
+
+🔗 **【Discord】絵文字/スタンプ/サウンドボード申請フォーム:** ${formUrl}`;
 }

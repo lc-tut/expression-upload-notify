@@ -11,12 +11,13 @@ GASエディタで環境変数を設定します。
 3. 左メニューの「プロジェクトの設定」（⚙️アイコン）をクリック
 4. 下部の「スクリプト プロパティ」セクションまでスクロール
 5. 「スクリプト プロパティを追加」をクリック
-6. 以下の2つのプロパティを追加：
+6. 以下の3つのプロパティを追加：
 
 | プロパティ | 値 | 説明 |
 |---------|-----|------|
 | `DISCORD_WEBHOOK_URL` | `https://discord.com/api/webhooks/...` | Discord Webhook URL |
 | `DISCORD_MENTION_ID` | `755410747042955294` | メンションするユーザーID |
+| `APPLICATION_FORM_URL` | `https://forms.gle/...` | 申請フォームのURL |
 
 ### Discord Webhook URLの取得方法
 
@@ -79,6 +80,7 @@ function checkConfig() {
   const props = PropertiesService.getScriptProperties();
   Logger.log('DISCORD_WEBHOOK_URL: ' + props.getProperty('DISCORD_WEBHOOK_URL'));
   Logger.log('DISCORD_MENTION_ID: ' + props.getProperty('DISCORD_MENTION_ID'));
+  Logger.log('APPLICATION_FORM_URL: ' + props.getProperty('APPLICATION_FORM_URL'));
 }
 ```
 
