@@ -30,14 +30,18 @@ jobs:
       - name: Setup clasp credentials
         env:
           CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+          SCRIPT_ID: ${{ secrets.SCRIPT_ID }}
         run: |
           echo "$CLASPRC_JSON" > ~/.clasprc.json
+          echo "{\"scriptId\":\"$SCRIPT_ID\",\"rootDir\":\"./dist\"}" > .clasp.json
 
       - name: Deploy to GAS
         run: npm run push
 
       - name: Notify deployment success
         if: success()
+        env:
+          SCRIPT_ID: ${{ secrets.SCRIPT_ID }}
         run: |
           echo "✅ Deployment to GAS succeeded!"
-          echo "Script ID: $(jq -r '.scriptId' .clasp.json)"
+          echo "Script ID: $SCRIPT_ID"

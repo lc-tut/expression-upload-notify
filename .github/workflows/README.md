@@ -51,28 +51,33 @@ cat ~/.clasprc.json
 2. 「Settings」→「Secrets and variables」→「Actions」
 3. 「New repository secret」をクリック
 
-#### サービスアカウント方式の場合
-- Name: `GCP_SA_KEY`
-- Secret: ダウンロードしたJSONファイルの内容全体
+#### 必要なSecrets（OAuth方式・推奨）
 
-#### OAuth方式の場合（簡易版・推奨）
+**1. CLASPRC_JSON**
 - Name: `CLASPRC_JSON`
 - Secret: `~/.clasprc.json`の内容全体
 
-### 5. .clasp.jsonの確認
-
-`.clasp.json`がリポジトリにコミットされていることを確認：
-
-```json
-{
-    "scriptId": "your-script-id-here",
-    "rootDir": "./dist"
-}
+```bash
+cat ~/.clasprc.json
 ```
 
-**注意:** `scriptId`は公開しても問題ありませんが、気になる場合はSecrets化も可能です。
+**2. SCRIPT_ID**
+- Name: `SCRIPT_ID`
+- Secret: GASプロジェクトのスクリプトID
 
-### 6. デプロイのテスト
+スクリプトIDの取得方法：
+1. 対象のスプレッドシートを開く
+2. 「拡張機能」→「Apps Script」
+3. プロジェクトの設定（⚙️アイコン）
+4. 「スクリプトID」をコピー
+
+または`.clasp.json`から：
+```bash
+cat .clasp.json
+# {"scriptId":"ここの値","rootDir":"./dist"}
+```
+
+### 5. デプロイのテスト
 
 1. 新しいブランチを作成
 2. コードを変更してコミット
