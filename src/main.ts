@@ -1,7 +1,7 @@
-import { App } from "./App";
+import { App } from './App';
 
 interface Global {
-    App: typeof App;
+  App: typeof App;
 }
 declare const global: Global;
 
