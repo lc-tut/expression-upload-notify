@@ -1,9 +1,11 @@
-import { App } from './App';
+import { onEdit, testNotification } from './App';
 
 interface Global {
-  App: typeof App;
+    onEdit: typeof onEdit;
+    testNotification: typeof testNotification;
 }
 declare const global: Global;
 
 // entryPoints
-global.App = App;
+global.onEdit = onEdit;
+global.testNotification = testNotification;
