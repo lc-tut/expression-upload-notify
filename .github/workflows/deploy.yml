@@ -47,7 +47,7 @@ jobs:
           echo "{\"scriptId\":\"$SCRIPT_ID\",\"rootDir\":\"./dist\"}" > .clasp.json
 
       - name: Deploy to GAS
-        run: npm run push
+        run: npm run push --force
 
       - name: Notify deployment success
         if: success()
