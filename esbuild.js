@@ -1,5 +1,4 @@
 import esbuild from 'esbuild';
-import { GasPlugin } from 'esbuild-gas-plugin';
 import { copyFileSync, mkdirSync } from 'fs';
 
 // distフォルダを作成（存在しない場合）
@@ -14,7 +13,11 @@ esbuild
         bundle: true,
         minify: true,
         outfile: './dist/main.js',
-        plugins: [GasPlugin],
+        format: 'iife',
+        globalName: '__bundle__',
+        footer: {
+            js: 'function onEdit(e){__bundle__.onEdit(e)}',
+        },
     })
     .then(() => {
         console.log('✅ Build succeeded!');

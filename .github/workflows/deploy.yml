@@ -27,6 +27,17 @@ jobs:
       - name: Build TypeScript
         run: npm run build
 
+      - name: Verify build output
+        run: |
+          echo "📁 dist フォルダの内容:"
+          ls -la dist/
+          echo ""
+          echo "📄 appsscript.json の内容:"
+          cat dist/appsscript.json
+          echo ""
+          echo "📊 main.js のサイズ:"
+          wc -c dist/main.js
+
       - name: Setup clasp credentials
         env:
           CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
