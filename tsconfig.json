@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
-        "lib": ["esnext"],
+        "lib": [
+            "esnext"
+        ],
         "target": "ES2019",
         "module": "ESNext",
         "moduleResolution": "node",
@@ -10,8 +12,12 @@
         "strict": true,
         "baseUrl": "./",
         "paths": {
-            "*": ["src/*"]
+            "*": [
+                "src/*"
+            ]
         }
     },
-    "include": ["./src/**/*"]
+    "include": [
+        "./src/**/*"
+    ]
 }
