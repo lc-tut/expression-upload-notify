@@ -1,8 +1,13 @@
 {
   "name": "expression-upload-notify",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "./src/main.ts",
   "scripts": {
+    "build": "node esbuild.js",
+    "push": "clasp push",
+    "open": "clasp open",
+    "deploy": "npm run build && npm run push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,5 +16,12 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@google/clasp": "^3.1.1",
+    "@types/google-apps-script": "^2.0.7",
+    "esbuild": "^0.27.0",
+    "esbuild-gas-plugin": "^0.10.0",
+    "typescript": "^5.9.3"
+  }
 }
